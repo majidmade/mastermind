@@ -1,0 +1,23 @@
+.board {
+
+
+
+}
+
+.row {
+    display: flex;
+    border: 2px solid white;
+    border-top: none;
+}
+
+.row-square {
+    width: 25px;
+    height: 25px;
+    padding: 15px;
+}
+
+.hole {
+    border: 1px solid white;
+    border-top: none;
+    border-radius: 50%;
+}
