@@ -6,6 +6,3 @@ export const COLORS = {
   'GREEN': { backgroundColor: '#00FF00', nextColor: 'WHITE'},
   'WHITE': { backgroundColor: '#FFFFFF', nextColor: 'NONE'},
 };
-
-export const NUM_COLORS = COLORS.length; // - 1;
-

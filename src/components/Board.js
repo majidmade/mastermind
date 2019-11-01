@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Board.css'
-import {Row} from './Row'
-import {COLORS} from "../colors";
+import { Row } from './Row'
 
-const defaultColors = [COLORS.NONE, COLORS.NONE, COLORS.NONE, COLORS.NONE];
+const rows = new Array(10).fill(null);
 
 export const Board = () => {
+  const [activeRow, setActiveRow] = useState(0)
   return (
     <div className='board'>
-      <Row initColors={defaultColors} onLock={console.log}/>
-      <Row initColors={defaultColors} onLock={console.log}/>
+      {rows.map((_, i) => (
+        <Row key={`row-${i}`}
+          isActive={i === activeRow}
+          onLock={() => setActiveRow(activeRow + 1)}
+        />
+      ))}
     </div>
   )
 }

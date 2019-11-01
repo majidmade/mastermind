@@ -1,38 +1,43 @@
-import React, {useState} from 'react';
-import {COLORS} from "../colors";
+import React, { useState } from 'react';
+import { COLORS } from "../colors";
 
-const isValid = colors => colors.every(c => c !== COLORS.NONE)
+const defaultColors = [
+  COLORS.NONE,
+  COLORS.NONE,
+  COLORS.NONE,
+  COLORS.NONE
+];
 
-const useLock = ({colors, onLock}) => {
+const useLock = ({ colors, onLock }) => {
   const [locked, setLocked] = useState(false);
-  const lockable = !locked && isValid(colors);
-  const lockText = (lockable && '✅') || (locked && '🔒') || '❌';
-
-  const lockColors = lockable ? () => {
-    setLocked(true);
-    onLock(colors);
-  } : () => {};
-
-  return {locked, lockColors, lockText}
+  const lockable = !locked && colors.every(c => c !== COLORS.NONE);
+  const lockText = (lockable && 'lockable') || (locked && 'locked') || 'invalid';
+  const lockColors = () => {
+    if (lockable) {
+      setLocked(true);
+      onLock(colors);
+    }
+  }
+  return { locked, lockColors, lockText }
 };
 
-export const Row = ({initColors, onLock}) => {
+export const Row = ({ initColors = defaultColors, isActive, onLock }) => {
   const [colors, setColors] = useState(initColors);
-  const {locked, lockColors, lockText} = useLock({colors, onLock});
+  const { locked, lockColors, lockText } = useLock({ colors, onLock });
 
   return (
-    <div className='row'>
-      {colors.map(({backgroundColor, nextColor}, i) => (
-        <div className='hole row-square'
-           key={`${i}hole`}
-           style={{backgroundColor}}
-           onClick={() => {
-             if (!locked) {
-               const newColors = [...colors];
-               newColors[i] = COLORS[nextColor];
-               setColors(newColors);
-             }
-           }}
+    <div className={`row row-${isActive ? 'active' : 'inactive'}`}>
+      {colors.map(({ backgroundColor, nextColor }, i) => (
+        <div key={`${i}hole`}
+          className='row-square hole'
+          style={{ backgroundColor }}
+          onClick={() => {
+            if (isActive && !locked) {
+              const newColors = [...colors];
+              newColors[i] = COLORS[nextColor];
+              setColors(newColors);
+            }
+          }}
         />
       ))}
       <div className='row-square' onClick={lockColors}>
