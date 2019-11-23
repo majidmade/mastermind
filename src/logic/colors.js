@@ -10,16 +10,9 @@ export const COLORS = {
   'W': { backgroundColor: '#FFFFFF', nextColor: 'X' },
 };
 
-const getRandomColor = () => {
+export const getRandomColor = () => {
   const colorKeys = Object.keys(COLORS).filter(c => c !== 'X')
   const rng = Math.floor(Math.random() * colorKeys.length);
   return COLORS[colorKeys[rng]]
 }
-
-export const solution = [
-  getRandomColor(),
-  getRandomColor(),
-  getRandomColor(),
-  getRandomColor()
-]
 

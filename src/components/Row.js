@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { COLORS, getGuessChecker } from "../colors";
+import { COLORS, getGuessChecker } from '../logic/colors';
 
 const { X } = COLORS
 const defaultColors = [X,X,X,X];

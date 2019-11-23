@@ -1,4 +1,4 @@
-import { getGuessChecker } from "./validation"
+import { getGuessChecker } from './validation'
 
 const _ = 'XYZ';
 describe('guess validation', () => {
