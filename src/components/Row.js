@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { COLORS } from "../colors";
+import { COLORS, getGuessChecker } from "../colors";
 
-const defaultColors = [
-  COLORS.NONE,
-  COLORS.NONE,
-  COLORS.NONE,
-  COLORS.NONE
-];
+const { X } = COLORS
+const defaultColors = [X,X,X,X];
 
 const useLock = ({ colors, onLock }) => {
   const [locked, setLocked] = useState(false);
-  const lockable = !locked && colors.every(c => c !== COLORS.NONE);
+  const lockable = !locked && colors.every(c => c !== X);
   const lockText = (lockable && 'lockable') || (locked && 'locked') || 'invalid';
   const lockColors = () => {
     if (lockable) {
@@ -41,7 +37,7 @@ export const Row = ({ initColors = defaultColors, isActive, onLock }) => {
         />
       ))}
       <div className='row-square' onClick={lockColors}>
-        {lockText}
+        {isActive ? lockText : ''}
       </div>
     </div>
   )

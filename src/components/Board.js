@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Board.css'
 import { Row } from './Row'
+import { solution } from '../colors';
 
 const rows = new Array(10).fill(null);
 
@@ -14,6 +15,11 @@ export const Board = () => {
           onLock={() => setActiveRow(activeRow + 1)}
         />
       ))}
+      <br/>
+      <Row
+        isActive={false}
+        initColors={solution}
+      />
     </div>
   )
 }
