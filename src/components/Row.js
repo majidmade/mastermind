@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { COLORS, getGuessChecker } from '../logic/colors';
+import { COLORS } from '../logic/colors';
+import { getGuessChecker } from '../logic/validation';
 
-const { X } = COLORS
-const defaultColors = [X,X,X,X];
+const { X, R, G } = COLORS
+
+const getLockText = ({ lockable }) => (
+  <div style={{ fontSize: 'x-large', color: (lockable ? G : R).backgroundColor }}>↜</div>
+)
+
 
 const useLock = ({ colors, onLock }) => {
   const [locked, setLocked] = useState(false);
   const lockable = !locked && colors.every(c => c !== X);
-  const lockText = (lockable && 'lockable') || (locked && 'locked') || 'invalid';
+  const lockText = getLockText({ locked, lockable })
   const lockColors = () => {
     if (lockable) {
       setLocked(true);
@@ -17,7 +22,9 @@ const useLock = ({ colors, onLock }) => {
   return { locked, lockColors, lockText }
 };
 
-export const Row = ({ initColors = defaultColors, isActive, onLock }) => {
+const getSolution = ({ colors, solution }) => JSON.stringify(getGuessChecker(solution)(colors))
+
+export const Row = ({ initColors = [X,X,X,X], isActive, onLock, solution }) => {
   const [colors, setColors] = useState(initColors);
   const { locked, lockColors, lockText } = useLock({ colors, onLock });
 
@@ -37,7 +44,8 @@ export const Row = ({ initColors = defaultColors, isActive, onLock }) => {
         />
       ))}
       <div className='row-square' onClick={lockColors}>
-        {isActive ? lockText : ''}
+        {isActive ? lockText : null}
+        {locked ? getSolution({ colors, solution }) : null}
       </div>
     </div>
   )

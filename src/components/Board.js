@@ -18,7 +18,8 @@ export const Board = () => {
       {rows.map((_, i) => (
         <Row key={`row-${i}`}
           isActive={i === activeRow}
-          onLock={() => setActiveRow(activeRow + 1)}
+          solution={solution}
+          onLock={() => setActiveRow(activeRow + 1)} // TODO: this can outgrow the # of rows
         />
       ))}
       <br/>
