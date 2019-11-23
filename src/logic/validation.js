@@ -1,12 +1,14 @@
-const getRedChecker = (solution) => (color, position) => solution[position] === color;
+// red: color + position match
+const getRedFilter = (solution) => (color, position) => solution[position] === color;
 
-const getWhiteChecker = (solution) => {
-  const isRed = getRedChecker(solution);
+// white: color matches, position wrong
+const getWhiteFilter = (solution) => {
+  const isRed = getRedFilter(solution);
   const mutateableSolution = [...solution];
   return (color, position) => {
     const match = mutateableSolution.indexOf(color);
     if (match > -1) {
-      mutateableSolution[match] = null;
+      mutateableSolution[match] = null; // <-- no more reds/whites from this
       return !isRed(color, position) && true;
     }
     return false;
@@ -14,8 +16,8 @@ const getWhiteChecker = (solution) => {
 };
 
 export const getGuessChecker = solution => {
-  const isRed = getRedChecker(solution);
-  const isWhite = getWhiteChecker(solution);
+  const isRed = getRedFilter(solution);
+  const isWhite = getWhiteFilter(solution);
   return guess => ({
     red: guess.filter(isRed).length,
     white: guess.filter(isWhite).length
