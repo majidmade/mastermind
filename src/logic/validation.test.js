@@ -357,6 +357,17 @@ describe('guess validation', () => {
       expect(getGuessChecker([0, 1, 2, 3])([3, 3, _, _])).toEqual({ red: 0, white: 1 })
     })
 
+    test('new reds override existing whites', () => {
+      expect(getGuessChecker(
+        [0, 1, 2, 3])(
+        [1, 1, _, _])
+      ).toEqual({ red: 1, white: 0 })
+      expect(getGuessChecker(
+        [0, 1, 1, 1])(
+        [1, 1, 1, 1])
+      ).toEqual({ red: 3, white: 0 })
+    })
+
   })
 
 })
